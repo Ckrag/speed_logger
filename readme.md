@@ -5,16 +5,12 @@
 containing information about a single log.</p>
 
 <h3>Depedencies</h3>
-<p>pip install -r requirements.txt</p>
+```pip install -r requirements.txt```
 
 <h3>Running</h3>
 <p>Run the script</p>
 
-```
-./speed_logger.py
-```
-<p>Alternatively set an interval other than the default
+```./speed_logger.py```
+<p>Alternatively set an interval other than the default, as seconds
 
-```
-./speed_logger.py 123
-```
+```./speed_logger.py 123```
