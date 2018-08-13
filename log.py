@@ -12,6 +12,7 @@ class Log:
         self._BAD_LOG_ENTRY_TEXT = "bad log entry"
         self._DAY_STAMP_FORMAT = "%Y-%m-%d"
         self._TIME_STAMP_FORMAT = "%Y-%m-%d %H:%M:%S"
+        self._NO_CONNECTION_ERROR = "Name or service not known"
 
     def _write_to_log(self, file, txt_to_log):
         with open(file, "a+") as f:
@@ -39,8 +40,11 @@ class Log:
             json_data = json.loads(stdoutdata)
             json_data = stdoutdata # Eeeeh, we just need the json string, but atleast this validates :D
         except Exception as e:
-            print("Exception: {}".format(e))
-            print(traceback.format_exc())
+            if self._NO_CONNECTION_ERROR in stdoutdata:
+                print("No connection: {}".format(stdoutdata))
+            else:
+                print("Exception: {}".format(e))
+                print(traceback.format_exc())
 
         return json_data
 
