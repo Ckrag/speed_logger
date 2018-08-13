@@ -5,6 +5,7 @@
 containing information about a single log.</p>
 
 <h3>Depedencies</h3>
+
 ```pip install -r requirements.txt```
 
 <h3>Running</h3>
