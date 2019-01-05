@@ -5,7 +5,7 @@ import time
 import traceback
 
 import requests
-
+from time import sleep
 
 class Log:
 
@@ -65,13 +65,14 @@ class Log:
         self._write_to_log(file, text)
 
     def _log_post(self, url):
-        self._external_cache.append(self._make_log_entry())
+        try:
+            self._external_cache.append(self._make_log_entry())
 
-        while self._external_cache:
-            text = self._external_cache[0]
-            try:
+            while self._external_cache:
+                text = self._external_cache[0]
+
                 resp = requests.post("{}/app/{}".format(url, "home_internet"), data=text, auth=('admin', 'Secret123'))
                 if resp.status_code is 200:
                     self._external_cache.pop(0)
-            except:
-                pass
+        except:
+            sleep(5)
