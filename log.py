@@ -69,6 +69,9 @@ class Log:
 
         while self._external_cache:
             text = self._external_cache[0]
-            resp = requests.post("{}/app/{}".format(url, "home_internet"), data=text, auth=('admin', 'Secret123'))
-            if resp.status_code is 200:
-                self._external_cache.pop(0)
+            try:
+                resp = requests.post("{}/app/{}".format(url, "home_internet"), data=text, auth=('admin', 'Secret123'))
+                if resp.status_code is 200:
+                    self._external_cache.pop(0)
+            except:
+                pass
