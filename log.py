@@ -71,7 +71,7 @@ class Log:
             while self._external_cache:
                 created, text = self._external_cache[0]
                 resp = requests.post(
-                    "{}/app/{}".format(url, "home_internet_test"),
+                    "{}/app/{}".format(url, "home_internet"),
                     params={'created': created},
                     headers={'Content-type': 'application/json'},
                     data=text,
