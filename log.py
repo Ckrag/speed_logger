@@ -3,9 +3,10 @@ import os.path
 import subprocess
 import time
 import traceback
+from time import sleep
 
 import requests
-from time import sleep
+
 
 class Log:
 
@@ -66,13 +67,19 @@ class Log:
 
     def _log_post(self, url, auth=None):
         try:
-            self._external_cache.append((int(time.time()), self._make_log_entry()))
-            # TODO: STORE TIME AND ADD IT TO REQUEST
+            self._external_cache.append((time.time(), self._make_log_entry()))
             while self._external_cache:
                 created, text = self._external_cache[0]
-
-                resp = requests.post("{}/app/{}".format(url, "home_internet"), params={'created': created}, data=text, auth=auth)
+                resp = requests.post(
+                    "{}/app/{}".format(url, "home_internet_test"),
+                    params={'created': created},
+                    headers={'Content-type': 'application/json'},
+                    data=text,
+                    auth=auth
+                )
                 if resp.status_code is 200:
                     self._external_cache.pop(0)
+                else:
+                    raise Exception()
         except:
-            sleep(5)
+            sleep(2)
