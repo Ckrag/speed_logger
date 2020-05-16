@@ -12,6 +12,6 @@ containing information about a single log.</p>
 <p>Run the script</p>
 
 ```./speed_logger.py```
-<p>Alternatively set an interval other than the default, as seconds
+<p>Options</p>
 
-```./speed_logger.py 123```
+```./speed_logger.py <log interval> <host> <basic_auth_user> <basic_auth_pass>```

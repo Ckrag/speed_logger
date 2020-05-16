@@ -52,11 +52,11 @@ class Log:
 
         return json_data
 
-    def log(self, entry_delimiter="\n", dms=None):
+    def log(self, entry_delimiter="\n", dms=None, auth=None):
         if not dms:
             self._log_local(entry_delimiter)
         else:
-            self._log_post(dms)
+            self._log_post(dms, auth=auth)
 
     def _log_local(self, entry_delimiter):
         text = self._make_log_entry() + entry_delimiter
@@ -64,14 +64,14 @@ class Log:
         file = self._get_log_path(file_name)
         self._write_to_log(file, text)
 
-    def _log_post(self, url):
+    def _log_post(self, url, auth=None):
         try:
-            self._external_cache.append(self._make_log_entry())
-
+            self._external_cache.append((int(time.time()), self._make_log_entry()))
+            # TODO: STORE TIME AND ADD IT TO REQUEST
             while self._external_cache:
-                text = self._external_cache[0]
+                created, text = self._external_cache[0]
 
-                resp = requests.post("{}/app/{}".format(url, "home_internet"), data=text, auth=('admin', 'Secret123'))
+                resp = requests.post("{}/app/{}".format(url, "home_internet"), params={'created': created}, data=text, auth=auth)
                 if resp.status_code is 200:
                     self._external_cache.pop(0)
         except:
